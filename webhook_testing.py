@@ -191,7 +191,7 @@ ib_lock = threading.Lock()
 
 # Define the MNQ (Micro E-mini Nasdaq) Futures Contract
 def create_mnq_contract():
-    return Future(symbol='MNQ', lastTradeDateOrContractMonth='202506', exchange='CME', currency='USD')
+    return Future(symbol='MNQ', lastTradeDateOrContractMonth='202509', exchange='CME', currency='USD')
 
 # Function to connect to IBKR
 def connect_ibkr():
@@ -262,6 +262,12 @@ def place_order(signal):
                         stopLossPrice=stop_price
                         )
             bracket[0].orderType = 'MKT'
+        elif signal.lower() == 'End of Day' and total_contracts < 0 and ibkr_position < 0:
+            market = MarketOrder('BUY', 1)
+            total_contracts += 1
+        elif signal.lower() == 'End of Day' and total_contracts > 0 and ibkr_position > 0:
+            market = MarketOrder('SELL', 1)
+            total_contracts -= 1
         else:
             positions = ib.positions()
             stop_price = None
