@@ -1,6 +1,7 @@
 # TradingView to IBKR Webhook Signal Automation
 
 Receive TradingView webhook alerts and place real-time trades via Interactive Brokers using `ib_insync`.
+ML experimentation coming after honeymoon
 
 ---
 
